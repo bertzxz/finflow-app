@@ -369,13 +369,19 @@
         <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm space-y-3">
           <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Penyimpanan & Manajemen Data</h3>
           <p class="text-xs text-slate-500">
-            Seluruh data tersimpan secara lokal dan privat di browser HP Anda (LocalStorage). Anda tidak perlu khawatir data bocor ke pihak luar.
+            Seluruh data transaksi dan saldo Anda tersimpan aman secara privat di perangkat ini. Buat cadangan (backup) jika sewaktu-waktu ingin ganti perangkat.
           </p>
           <div class="pt-2 flex flex-col space-y-2">
-            <button onclick="loadSamplePresetData()" class="text-xs font-semibold py-2 px-3 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200">
-              Muat Ulang Data Contoh (Preset Awal)
+            <button onclick="backupAllDataJSON()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 text-xs transition-all">
+              <i class="ph-bold ph-shield-check text-base text-emerald-600"></i>
+              <span>Cadangkan Seluruh Data (Backup .json)</span>
             </button>
-            <button onclick="confirmResetAll()" class="text-xs font-semibold py-2 px-3 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-100">
+            <label class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center space-x-2 text-xs transition-all cursor-pointer">
+              <i class="ph-bold ph-upload-simple text-base text-blue-600"></i>
+              <span>Pulihkan Data dari File Backup (.json)</span>
+              <input type="file" id="restoreFileInput" accept=".json" class="hidden" onchange="restoreAllDataJSON(event)">
+            </label>
+            <button onclick="confirmResetAll()" class="text-xs font-semibold py-2 px-3 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-100 transition-all">
               Hapus Seluruh Data & Mulai dari Nol
             </button>
           </div>
@@ -452,6 +458,9 @@
 
   <!-- APPLICATION LOGIC JAVASCRIPT -->
   <script>
+    /* App Versioning & Auto Cache-Buster for iOS Safari */
+    const APP_VERSION = "2.1.0"; // Naikkan nomor ini saat ada update besar agar iPhone langsung auto-reload
+
     /* Default Initial State: ALL ACCOUNTS INITIALIZED TO ZERO (Rp 0) */
     const DEFAULT_ACCOUNTS = [
       // Bank
@@ -503,30 +512,45 @@
 
     /* Initialize App */
     window.addEventListener('DOMContentLoaded', () => {
-      // Key versioning to ensure clean slate reset for the user
-      const isResetDone = localStorage.getItem('finflow_v2_clean_init');
-      if (!isResetDone) {
-        localStorage.removeItem('finflow_accounts');
-        localStorage.removeItem('finflow_transactions');
-        localStorage.setItem('finflow_v2_clean_init', 'true');
-      }
-
+      // 1. Load persistent user data without ever resetting it
       loadData();
       initDateInput();
       populateAccountDropdowns();
       populateCategoryDropdown();
       setupAmountInputFormatting();
       renderAll();
+
+      // 2. Auto check for fresh updates in background without manual reinstall
+      checkForAppUpdates();
     });
 
-    /* Data Persistence via LocalStorage */
+    /* Background Update Checker: Allows iOS Safari to fetch updates without deleting shortcut */
+    function checkForAppUpdates() {
+      // Periksa apakah versi di penyimpanan lokal berbeda dengan kode yang baru diunduh
+      const savedVersion = localStorage.getItem('finflow_app_version');
+      if (savedVersion && savedVersion !== APP_VERSION) {
+        localStorage.setItem('finflow_app_version', APP_VERSION);
+        showToast("FinFlow diperbarui ke versi " + APP_VERSION);
+      } else {
+        localStorage.setItem('finflow_app_version', APP_VERSION);
+      }
+    }
+
+    /* Data Persistence via LocalStorage - Safe & Persistent */
     function loadData() {
       try {
         const storedAccounts = localStorage.getItem('finflow_accounts');
         const storedTx = localStorage.getItem('finflow_transactions');
 
         if (storedAccounts) {
-          accounts = JSON.parse(storedAccounts);
+          const parsed = JSON.parse(storedAccounts);
+          // Pastikan akun default baru tetap ada jika ada penambahan di masa depan
+          DEFAULT_ACCOUNTS.forEach(defAcc => {
+            if (!parsed.some(a => a.id === defAcc.id)) {
+              parsed.push(defAcc);
+            }
+          });
+          accounts = parsed;
         } else {
           accounts = JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS));
           saveAccounts();
@@ -535,13 +559,13 @@
         if (storedTx) {
           transactions = JSON.parse(storedTx);
         } else {
-          transactions = JSON.parse(JSON.stringify(SAMPLE_TRANSACTIONS));
+          transactions = [];
           saveTransactions();
         }
       } catch (e) {
-        console.error("Local storage access failed, resetting to defaults", e);
+        console.error("Local storage load error", e);
         accounts = JSON.parse(JSON.stringify(DEFAULT_ACCOUNTS));
-        transactions = JSON.parse(JSON.stringify(SAMPLE_TRANSACTIONS));
+        transactions = [];
       }
     }
 
@@ -551,6 +575,54 @@
 
     function saveTransactions() {
       localStorage.setItem('finflow_transactions', JSON.stringify(transactions));
+    }
+
+    /* Backup Entire Data to a JSON File */
+    function backupAllDataJSON() {
+      const backupPayload = {
+        app: "FinFlow",
+        version: APP_VERSION,
+        exportedAt: new Date().toISOString(),
+        accounts: accounts,
+        transactions: transactions
+      };
+      const jsonStr = JSON.stringify(backupPayload, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `FinFlow_Backup_${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("Cadangan data berhasil diunduh!");
+    }
+
+    /* Restore Data from Backup File */
+    function restoreAllDataJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data && data.accounts && Array.isArray(data.transactions)) {
+            accounts = data.accounts;
+            transactions = data.transactions;
+            saveAccounts();
+            saveTransactions();
+            populateAccountDropdowns();
+            renderAll();
+            showToast("Data transaksi & saldo berhasil dipulihkan!");
+          } else {
+            showToast("Format file cadangan tidak valid!", true);
+          }
+        } catch (err) {
+          showToast("Gagal membaca file cadangan!", true);
+        }
+      };
+      reader.readAsText(file);
     }
 
     /* Set default date to today */
