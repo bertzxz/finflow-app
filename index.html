@@ -875,15 +875,18 @@
     }
 
     function renderDashboardAccountsPreview() {
-        <div class="pt-2">
-          <button onclick="saveUpdatedBalances()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-lg transition-all text-sm">
-            Simpan Perubahan Saldo
-          </button>
-        </div>
-      </div>
-    </div>
-
-  </div>
+      const container = document.getElementById('dashAccountsPreview');
+      if (!container) return;
+      let html = '';
+      accounts.slice(0, 6).forEach(acc => {
+        html += `
+          <div class="bg-white border border-slate-200/80 rounded-xl p-2.5 min-w-[125px] shrink-0 shadow-sm">
+            <div class="flex items-center space-x-1.5 mb-1">
+              <span class="w-2 h-2 rounded-full bg-gradient-to-tr ${acc.color}"></span>
+              <span class="text-[11px] font-semibold text-slate-700 truncate">${acc.name}</span>
+            </div>
+            <p class="text-xs font-bold text-slate-900 truncate">${formatRupiah(acc.balance)}</p>
+          </div>
         `;
       });
       container.innerHTML = html;
