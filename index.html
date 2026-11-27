@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>FinFlow - Catat Transaksi & Aset Pribadi</title>
+  <meta name="theme-color" content="#dc2626">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FinFlow">
+  
+  <!-- Premium Red App Icon (Favicon & Apple Touch Icon for Home Screen) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='redGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ef4444'/%3E%3Cstop offset='50%25' stop-color='%23dc2626'/%3E%3Cstop offset='100%25' stop-color='%23991b1b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23redGrad)'/%3E%3Cpath d='M384 160H128c-17.7 0-32 14.3-32 32v192c0 17.7 14.3 32 32 32h256c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32zm-32 144c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zM128 128h224c8.8 0 16-7.2 16-16s-7.2-16-16-16H128C92.7 96 64 124.7 64 160v192c0 8.8 7.2 16 16 16s16-7.2 16-16V160c0-17.7 14.3-32 32-32z' fill='%23ffffff'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='redGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23ef4444'/%3E%3Cstop offset='50%25' stop-color='%23dc2626'/%3E%3Cstop offset='100%25' stop-color='%23991b1b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='128' fill='url(%23redGrad)'/%3E%3Cpath d='M384 160H128c-17.7 0-32 14.3-32 32v192c0 17.7 14.3 32 32 32h256c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32zm-32 144c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24zM128 128h224c8.8 0 16-7.2 16-16s-7.2-16-16-16H128C92.7 96 64 124.7 64 160v192c0 8.8 7.2 16 16 16s16-7.2 16-16V160c0-17.7 14.3-32 32-32z' fill='%23ffffff'/%3E%3C/svg%3E">
+
+  <!-- Web App Manifest embedded -->
+  <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22FinFlow%22%2C%22short_name%22%3A%22FinFlow%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23ffffff%22%2C%22theme_color%22%3A%22%23dc2626%22%7D">
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Phosphor Icons -->
@@ -16,19 +28,14 @@
       theme: {
         extend: {
           colors: {
-            emerald: {
-              50: '#ecfdf5',
-              100: '#d1fae5',
-              500: '#10b981',
-              600: '#059669',
-              700: '#047857',
-              900: '#064e3b'
-            },
-            surface: {
-              light: '#f8fafc',
-              dark: '#0f172a',
-              cardLight: '#ffffff',
-              cardDark: '#1e293b'
+            brand: {
+              50: '#fef2f2',
+              100: '#fee2e2',
+              500: '#ef4444',
+              600: '#dc2626',
+              700: '#b91c1c',
+              800: '#991b1b',
+              900: '#7f1d1d'
             }
           },
           fontFamily: {
@@ -67,7 +74,7 @@
     <!-- Top App Bar -->
     <header class="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200 px-4 py-3 flex items-center justify-between">
       <div class="flex items-center space-x-2">
-        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-white shadow-md">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-brand-700 via-brand-600 to-rose-400 flex items-center justify-center text-white shadow-md shadow-brand-600/30">
           <i class="ph-bold ph-wallet text-lg"></i>
         </div>
         <div>
@@ -76,7 +83,7 @@
         </div>
       </div>
       <div class="flex items-center space-x-2">
-        <span id="currentMonthBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+        <span id="currentMonthBadge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-100">
           Nov 2026
         </span>
       </div>
@@ -88,24 +95,24 @@
       <!-- ================= TAB 1: DASHBOARD ================= -->
       <section id="tab-dashboard" class="p-4 space-y-4">
         <!-- Net Worth Card -->
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 via-teal-700 to-slate-900 p-5 text-white shadow-lg">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-brand-800 via-brand-700 to-slate-950 p-5 text-white shadow-xl shadow-brand-900/20">
           <div class="absolute -right-6 -bottom-6 opacity-10 text-9xl">
             <i class="ph-fill ph-vault"></i>
           </div>
           <div class="flex justify-between items-start">
-            <span class="text-xs uppercase tracking-wider text-emerald-200 font-medium">Total Kekayaan Bersih</span>
+            <span class="text-xs uppercase tracking-wider text-rose-200 font-medium">Total Kekayaan Bersih</span>
             <span class="bg-white/10 text-white/90 text-[10px] px-2 py-0.5 rounded-full font-semibold backdrop-blur-sm">Real-time</span>
           </div>
           <div class="mt-2 text-2xl font-black tracking-tight" id="dashTotalAssets">Rp 0</div>
-          <p class="text-xs text-emerald-200/80 mt-1">Total seluruh Bank, E-Wallet & Investasi</p>
+          <p class="text-xs text-rose-200/80 mt-1">Total seluruh Bank, E-Wallet & Investasi</p>
           
           <div class="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-white/10">
             <div>
-              <p class="text-[11px] text-emerald-200 font-medium">Kas & E-Wallet</p>
+              <p class="text-[11px] text-rose-200 font-medium">Kas & E-Wallet</p>
               <p class="text-sm font-bold tracking-tight" id="dashLiquidAssets">Rp 0</p>
             </div>
             <div>
-              <p class="text-[11px] text-emerald-200 font-medium">Investasi Pasar Modal</p>
+              <p class="text-[11px] text-rose-200 font-medium">Investasi Pasar Modal</p>
               <p class="text-sm font-bold tracking-tight" id="dashInvestAssets">Rp 0</p>
             </div>
           </div>
@@ -145,7 +152,7 @@
             <span class="font-bold text-slate-900" id="dashCashFlow">Rp 0</span>
           </div>
           <div class="w-full bg-slate-100 rounded-full h-2 mt-2.5 overflow-hidden">
-            <div id="savingsRateBar" class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: 50%"></div>
+            <div id="savingsRateBar" class="bg-brand-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
           </div>
           <div class="flex justify-between items-center text-[11px] text-slate-400 mt-1.5">
             <span>Tingkat Tabungan (Savings Rate)</span>
@@ -157,7 +164,7 @@
         <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
           <div class="flex justify-between items-center mb-3">
             <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Distribusi Pengeluaran</h3>
-            <span class="text-[11px] text-emerald-600 font-semibold cursor-pointer" onclick="switchTab('history')">Lihat Semua</span>
+            <span class="text-[11px] text-brand-600 font-semibold cursor-pointer" onclick="switchTab('history')">Lihat Semua</span>
           </div>
           <div class="relative h-48 w-full flex items-center justify-center">
             <canvas id="expenseChart"></canvas>
@@ -171,8 +178,8 @@
         <!-- Quick Summary of Accounts (Horizontal Scroll) -->
         <div>
           <div class="flex justify-between items-center mb-2 px-1">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Akun Teratas</h3>
-            <span class="text-[11px] text-emerald-600 font-semibold cursor-pointer" onclick="switchTab('assets')">Kelola Akun</span>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Daftar Akun Anda</h3>
+            <span class="text-[11px] text-brand-600 font-semibold cursor-pointer" onclick="switchTab('assets')">Kelola Akun</span>
           </div>
           <div class="flex space-x-2.5 overflow-x-auto no-scrollbar pb-1" id="dashAccountsPreview">
             <!-- Injected via JS -->
@@ -185,7 +192,7 @@
         <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm space-y-4">
           <div class="flex items-center justify-between border-b border-slate-100 pb-3">
             <h2 class="text-base font-bold text-slate-800">Catat Transaksi Baru</h2>
-            <span class="text-xs text-slate-400">Otomatis update saldo</span>
+            <span class="text-xs text-slate-400">Otomatis potong saldo</span>
           </div>
 
           <!-- Transaction Type Toggle -->
@@ -206,7 +213,7 @@
             <label class="block text-xs font-semibold text-slate-500 mb-1">Nominal (Rp)</label>
             <div class="relative">
               <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">Rp</span>
-              <input type="text" id="txAmount" inputmode="numeric" placeholder="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-11 pr-3 text-xl font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
+              <input type="text" id="txAmount" inputmode="numeric" placeholder="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-11 pr-3 text-xl font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
             </div>
             <!-- Quick Nominal Chips -->
             <div class="flex space-x-1.5 mt-2 overflow-x-auto no-scrollbar">
@@ -220,7 +227,7 @@
           <!-- Source Account -->
           <div id="sourceAccountGroup">
             <label id="lblSourceAccount" class="block text-xs font-semibold text-slate-500 mb-1">Sumber Dana / Rekening</label>
-            <select id="txSourceAccount" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-3 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
+            <select id="txSourceAccount" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-3 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
               <!-- Dynamically populated -->
             </select>
           </div>
@@ -228,7 +235,7 @@
           <!-- Target Account (Only for Transfer) -->
           <div id="targetAccountGroup" class="hidden">
             <label class="block text-xs font-semibold text-slate-500 mb-1">Rekening Tujuan Transfer</label>
-            <select id="txTargetAccount" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-3 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
+            <select id="txTargetAccount" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-3 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
               <!-- Dynamically populated -->
             </select>
           </div>
@@ -236,7 +243,7 @@
           <!-- Category (For Expense/Income) -->
           <div id="categoryGroup">
             <label class="block text-xs font-semibold text-slate-500 mb-1">Kategori</label>
-            <select id="txCategory" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-3 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all">
+            <select id="txCategory" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 px-3 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
               <!-- Populated by JS based on type -->
             </select>
           </div>
@@ -245,17 +252,17 @@
           <div class="grid grid-cols-2 gap-3">
             <div>
               <label class="block text-xs font-semibold text-slate-500 mb-1">Tanggal</label>
-              <input type="date" id="txDate" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white">
+              <input type="date" id="txDate" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white">
             </div>
             <div>
               <label class="block text-xs font-semibold text-slate-500 mb-1">Keterangan / Catatan</label>
-              <input type="text" id="txNote" placeholder="Cth: Nasi Padang / Top-up" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white">
+              <input type="text" id="txNote" placeholder="Cth: Nasi Padang / Top-up" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white">
             </div>
           </div>
 
           <!-- Action Buttons -->
           <div class="pt-2">
-            <button type="button" onclick="saveTransaction()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-emerald-600/20 active:scale-[0.98] transition-all flex items-center justify-center space-x-2">
+            <button type="button" onclick="saveTransaction()" class="w-full bg-gradient-to-r from-brand-600 to-rose-600 hover:from-brand-700 hover:to-rose-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-brand-600/30 active:scale-[0.98] transition-all flex items-center justify-center space-x-2">
               <i class="ph-bold ph-floppy-disk text-lg"></i>
               <span>Simpan Transaksi</span>
             </button>
@@ -272,13 +279,13 @@
 
         <!-- Filter bar -->
         <div class="grid grid-cols-2 gap-2">
-          <select id="filterType" onchange="renderHistory()" class="bg-white border border-slate-200 text-xs font-medium rounded-xl py-2 px-3 text-slate-700 focus:ring-2 focus:ring-emerald-500">
+          <select id="filterType" onchange="renderHistory()" class="bg-white border border-slate-200 text-xs font-medium rounded-xl py-2 px-3 text-slate-700 focus:ring-2 focus:ring-brand-500">
             <option value="ALL">Semua Jenis</option>
             <option value="expense">Pengeluaran Saja</option>
             <option value="income">Pemasukan Saja</option>
             <option value="transfer">Transfer Saja</option>
           </select>
-          <select id="filterAccount" onchange="renderHistory()" class="bg-white border border-slate-200 text-xs font-medium rounded-xl py-2 px-3 text-slate-700 focus:ring-2 focus:ring-emerald-500">
+          <select id="filterAccount" onchange="renderHistory()" class="bg-white border border-slate-200 text-xs font-medium rounded-xl py-2 px-3 text-slate-700 focus:ring-2 focus:ring-brand-500">
             <option value="ALL">Semua Akun</option>
             <!-- Injected via JS -->
           </select>
@@ -295,11 +302,11 @@
         <div class="flex justify-between items-center">
           <div>
             <h2 class="text-base font-bold text-slate-800">Dompet & Portofolio</h2>
-            <p class="text-xs text-slate-400">Saldo update otomatis tiap transaksi</p>
+            <p class="text-xs text-slate-400">Atur saldo awal atau sesuaikan saldo riil</p>
           </div>
-          <button onclick="openEditBalanceModal()" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 flex items-center space-x-1">
+          <button onclick="openEditBalanceModal()" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-brand-50 text-brand-700 border border-brand-200 hover:bg-brand-100 flex items-center space-x-1">
             <i class="ph-bold ph-pencil-simple"></i>
-            <span>Edit Saldo</span>
+            <span>Set Saldo Awal</span>
           </button>
         </div>
 
@@ -372,7 +379,7 @@
     </main>
 
     <!-- Floating Action Button (Quick Add) -->
-    <button onclick="switchTab('transaction')" id="fabBtn" class="fixed bottom-20 right-4 z-40 max-w-md w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full text-white shadow-xl shadow-emerald-600/40 flex items-center justify-center text-2xl active:scale-95 transition-transform">
+    <button onclick="switchTab('transaction')" id="fabBtn" class="fixed bottom-20 right-4 z-40 max-w-md w-12 h-12 bg-gradient-to-r from-brand-600 to-rose-600 rounded-full text-white shadow-xl shadow-brand-600/40 flex items-center justify-center text-2xl active:scale-95 transition-transform">
       <i class="ph-bold ph-plus"></i>
     </button>
 
@@ -380,7 +387,7 @@
     <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/80 safe-bottom">
       <div class="grid grid-cols-5 py-1 px-1">
         <!-- Tab 1 -->
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center justify-center py-1.5 text-emerald-600 font-semibold transition-colors">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="flex flex-col items-center justify-center py-1.5 text-brand-600 font-semibold transition-colors">
           <i class="ph-bold ph-house text-xl"></i>
           <span class="text-[10px] mt-0.5">Beranda</span>
         </button>
@@ -440,22 +447,22 @@
 
   <!-- APPLICATION LOGIC JAVASCRIPT -->
   <script>
-    /* Default Initial State & Preset Accounts */
+    /* Default Initial State: ALL ACCOUNTS INITIALIZED TO ZERO (Rp 0) */
     const DEFAULT_ACCOUNTS = [
       // Bank
-      { id: 'bca', name: 'BCA', category: 'bank', balance: 4500000, icon: 'ph-bank', color: 'from-blue-600 to-indigo-700' },
-      { id: 'mandiri', name: 'Mandiri', category: 'bank', balance: 3200000, icon: 'ph-bank', color: 'from-amber-600 to-yellow-600' },
-      { id: 'seabank', name: 'SeaBank', category: 'bank', balance: 2150000, icon: 'ph-bank', color: 'from-orange-500 to-red-500' },
-      { id: 'blu', name: 'blu by BCA', category: 'bank', balance: 1000000, icon: 'ph-bank', color: 'from-cyan-500 to-blue-500' },
+      { id: 'bca', name: 'BCA', category: 'bank', balance: 0, icon: 'ph-bank', color: 'from-blue-600 to-indigo-700' },
+      { id: 'mandiri', name: 'Mandiri', category: 'bank', balance: 0, icon: 'ph-bank', color: 'from-amber-600 to-yellow-600' },
+      { id: 'seabank', name: 'SeaBank', category: 'bank', balance: 0, icon: 'ph-bank', color: 'from-orange-500 to-red-500' },
+      { id: 'blu', name: 'blu by BCA', category: 'bank', balance: 0, icon: 'ph-bank', color: 'from-cyan-500 to-blue-500' },
       // E-Wallet
-      { id: 'gopay', name: 'GoPay', category: 'ewallet', balance: 345000, icon: 'ph-device-mobile', color: 'from-emerald-500 to-teal-600' },
-      { id: 'dana', name: 'DANA', category: 'ewallet', balance: 210000, icon: 'ph-device-mobile', color: 'from-sky-500 to-blue-600' },
-      { id: 'ovo', name: 'OVO', category: 'ewallet', balance: 150000, icon: 'ph-device-mobile', color: 'from-purple-600 to-indigo-800' },
-      { id: 'shopeepay', name: 'ShopeePay', category: 'ewallet', balance: 95000, icon: 'ph-device-mobile', color: 'from-orange-600 to-amber-500' },
+      { id: 'gopay', name: 'GoPay', category: 'ewallet', balance: 0, icon: 'ph-device-mobile', color: 'from-emerald-500 to-teal-600' },
+      { id: 'dana', name: 'DANA', category: 'ewallet', balance: 0, icon: 'ph-device-mobile', color: 'from-sky-500 to-blue-600' },
+      { id: 'ovo', name: 'OVO', category: 'ewallet', balance: 0, icon: 'ph-device-mobile', color: 'from-purple-600 to-indigo-800' },
+      { id: 'shopeepay', name: 'ShopeePay', category: 'ewallet', balance: 0, icon: 'ph-device-mobile', color: 'from-orange-600 to-amber-500' },
       // Investment
-      { id: 'stockbit', name: 'Stockbit (Saham)', category: 'invest', balance: 8500000, icon: 'ph-chart-line-up', color: 'from-emerald-700 to-teal-900' },
-      { id: 'rdpu', name: 'RDPU (Pasar Uang)', category: 'invest', balance: 5000000, icon: 'ph-coins', color: 'from-cyan-700 to-blue-900' },
-      { id: 'obligasi', name: 'Obligasi / SBN', category: 'invest', balance: 10000000, icon: 'ph-certificate', color: 'from-violet-700 to-purple-950' }
+      { id: 'stockbit', name: 'Stockbit (Saham)', category: 'invest', balance: 0, icon: 'ph-chart-line-up', color: 'from-rose-700 to-red-950' },
+      { id: 'rdpu', name: 'RDPU (Pasar Uang)', category: 'invest', balance: 0, icon: 'ph-coins', color: 'from-cyan-700 to-blue-900' },
+      { id: 'obligasi', name: 'Obligasi / SBN', category: 'invest', balance: 0, icon: 'ph-certificate', color: 'from-violet-700 to-purple-950' }
     ];
 
     const EXPENSE_CATEGORIES = [
@@ -480,48 +487,8 @@
       'Lain-lain'
     ];
 
-    const SAMPLE_TRANSACTIONS = [
-      {
-        id: 'tx-1',
-        type: 'expense',
-        amount: 45000,
-        source: 'gopay',
-        target: null,
-        category: 'Makanan & Minuman',
-        date: '2026-11-25',
-        note: 'Makan siang Nasi Padang'
-      },
-      {
-        id: 'tx-2',
-        type: 'expense',
-        amount: 350000,
-        source: 'bca',
-        target: null,
-        category: 'Tagihan & Utilitas',
-        date: '2026-11-24',
-        note: 'Token Listrik PLN'
-      },
-      {
-        id: 'tx-3',
-        type: 'income',
-        amount: 8500000,
-        source: 'bca',
-        target: null,
-        category: 'Gaji Pokok',
-        date: '2026-11-20',
-        note: 'Gaji Bulanan'
-      },
-      {
-        id: 'tx-4',
-        type: 'transfer',
-        amount: 200000,
-        source: 'bca',
-        target: 'gopay',
-        category: 'Transfer Saldo',
-        date: '2026-11-22',
-        note: 'Top up GoPay'
-      }
-    ];
+    // Clean start with NO dummy transactions
+    const SAMPLE_TRANSACTIONS = [];
 
     // State Variables
     let accounts = [];
@@ -531,6 +498,14 @@
 
     /* Initialize App */
     window.addEventListener('DOMContentLoaded', () => {
+      // Key versioning to ensure clean slate reset for the user
+      const isResetDone = localStorage.getItem('finflow_v2_clean_init');
+      if (!isResetDone) {
+        localStorage.removeItem('finflow_accounts');
+        localStorage.removeItem('finflow_transactions');
+        localStorage.setItem('finflow_v2_clean_init', 'true');
+      }
+
       loadData();
       initDateInput();
       populateAccountDropdowns();
@@ -620,7 +595,7 @@
         }
         if (navBtn) {
           if (t === tabId) {
-            navBtn.className = "flex flex-col items-center justify-center py-1.5 text-emerald-600 font-semibold transition-colors";
+            navBtn.className = "flex flex-col items-center justify-center py-1.5 text-brand-600 font-semibold transition-colors";
           } else {
             navBtn.className = "flex flex-col items-center justify-center py-1.5 text-slate-400 hover:text-slate-600 font-medium transition-colors";
           }
@@ -900,14 +875,15 @@
     }
 
     function renderDashboardAccountsPreview() {
-      const container = document.getElementById('dashAccountsPreview');
-      let html = '';
-      accounts.slice(0, 6).forEach(acc => {
-        html += `
-          <div class="bg-white border border-slate-200/80 rounded-2xl p-3 shrink-0 min-w-[125px] shadow-sm">
-            <div class="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">${acc.name}</div>
-            <div class="text-xs font-bold text-slate-900 mt-1">${formatRupiah(acc.balance)}</div>
-          </div>
+        <div class="pt-2">
+          <button onclick="saveUpdatedBalances()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-lg transition-all text-sm">
+            Simpan Perubahan Saldo
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
         `;
       });
       container.innerHTML = html;
